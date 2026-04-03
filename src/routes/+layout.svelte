@@ -16,15 +16,15 @@
 	<svelte:fragment slot="sidebarLeft">
 		<div class="print:hidden h-full">
 		<AppRail width="w-28">
-			<AppRailAnchor  href="{base}/" selected={$page.url.pathname === '/'}>
+			<AppRailAnchor  href="{base}/" selected={$page.route.id === '/'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">home</span></svelte:fragment>
 				<span>Home</span>
 			</AppRailAnchor>
-			<AppRailAnchor href="{base}/preparation" selected={$page.url.pathname === '/preparation'}>
+			<AppRailAnchor href="{base}/preparation" selected={$page.route.id === '/preparation'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">groups</span></svelte:fragment>
 				<span>Study Configurator</span>
 			</AppRailAnchor>
-			<AppRailAnchor href="{base}/postprocessing" selected={$page.url.pathname === '/postprocessing'}>
+			<AppRailAnchor href="{base}/postprocessing" selected={$page.route.id === '/postprocessing'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">insert_chart</span></svelte:fragment>
 				<span>Postprocessing</span>
 			</AppRailAnchor>

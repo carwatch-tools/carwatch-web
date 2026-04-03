@@ -6,7 +6,7 @@
 CARWatch is an open-source framework to support **objective** and **low-cost** assessment of cortisol samples in real-world, unsupervised environments. It is especially suitable for **cortisol awakening response (CAR)** research, but not limited to this application.
 
 It consists of an [Android application](https://github.com/mad-lab-fau/carwatch-app) that schedules sampling times and tracks
-them by scanning a barcode on the respective sampling tube as well as a [web app](https://mad-lab-fau.github.io/carwatch-web/) that provides tools to 
+them by scanning a barcode on the respective sampling tube as well as a [web app](https://carwatch-tools.github.io/carwatch-web/) that provides tools to
 **configure studies** and **prepare the study materials** and to **process the log data** recorded by the app.
 Alternatively, users with programming experience can use the corresponding [Python package](https://github.com/mad-lab-fau/carwatch-python/) that provides the same range of functionality.
 
@@ -38,7 +38,7 @@ This includes:
 
 ## Usage
 
-Simply visit the [CARWatch Website](https://mad-lab-fau.github.io/carwatch-web/) and follow the instructions to get started. It works for all common modern browsers. In particular, it has been extensively tested for Chrome and Firefox. All calculations are performed locally in your browser and no data is sent to a server. Thus, we are not collecting any data from you.
+Simply visit the [CARWatch Website](https://carwatch-tools.github.io/carwatch-web/) and follow the instructions to get started. It works for all common modern browsers. In particular, it has been extensively tested for Chrome and Firefox. All calculations are performed locally in your browser and no data is sent to a server. Thus, we are not collecting any data from you.
 
 ## Developer Guide
 
@@ -51,7 +51,7 @@ a local copy of the repository.
 To run `carwatch-web` locally, first clone the repository:
 
 ```bash
-git clone https://github.com/mad-lab-fau/carwatch-web.git
+git clone https://github.com/carwatch-tools/carwatch-web.git
 cd your/path/to/carwatch-web
 ```
 
