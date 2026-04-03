@@ -176,8 +176,8 @@
 
   <form id="study_form">
     
-    <div class="flex">
-      <div class="w-1/2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
         <label class="label">
           <span>Study name</span>
           <input class="input" id="study_name" type="text" on:keydown={sanitizeStudyName} bind:value={$studyProps.studyName} maxlength="15" required>
@@ -187,31 +187,33 @@
 
     <hr class="my-4">
     
-    <div class="flex">
-      <div class="w-1/2">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start">
+      <div>
         <label class="label">
-          <span>Number of sampling days</span>
+          <span>Sampling days</span>
           <input class="input" id="num_days" type="number" bind:value={$studyProps.numDays} min="1" max ="99" step="1" required>
         </label>
       </div>
-      <div class="w-1/2 mx-6">  
+      <div>  
         <label class="label">
-          <span>Number of samples per day (excluding a potential evening sample)</span>
+          <span>Samples per day</span>
           <input class="input" id="num_samples" type="number" bind:value={$studyProps.numSamples} min="1" max ="99" step="1" required>
         </label>
+        <p class="px-1 pt-1 text-sm opacity-70">Excluding any optional evening sample.</p>
       </div>
-      <div class="w-1/2 mx-6">  
+      <div>  
         <label class="label">
-          <span>ID Prefix (e.g. 'S' for saliva sample IDs)</span>
+          <span>Sample ID prefix</span>
           <input class="input" id="prefix_bio" type="text" maxlength="1" bind:value={$studyProps.samplePrefix} required>
         </label>
+        <p class="px-1 pt-1 text-sm opacity-70">Example: `S` for saliva or `B` for bloodspots.</p>
       </div>
     </div>
 
     <hr class="my-4">
 
-    <div class="flex">
-      <div class="w-1/2">  
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>  
         <label class="label">
           <span>Participant ID source</span>
           <select
@@ -228,19 +230,19 @@
     </div>
   
     {#if $studyProps.readParticipantsFromFile}
-    <div class="flex">
-      <div class="w-1/2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
         <label class="label">
           <span>Name of column with participant IDs</span>
           <input class="input" id="participant_col" type="text" bind:value={$studyProps.participantColumn}>
         </label>
       </div>
-      <div class="w-1/2 mx-6">
+      <div>
       </div>
     </div>
 
-    <div class="flex">
-      <div class="w-1/2">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>
         <div class="my-6">
           <FileDropzone name="file" id="file" on:change={handleFileUpload} accept=".csv">
             <svelte:fragment slot="message"><b>Upload a file</b> or drag and drop.</svelte:fragment>
@@ -250,7 +252,7 @@
       </div>
       
           {#if parsingError}
-          <div class="w-1/2 mx-6 flex items-center">
+          <div class="flex items-center">
             <aside class="alert variant-soft-error w-full">
               <span class="material-symbols-outlined">
               warning
@@ -262,7 +264,7 @@
             </aside>
           </div>
           {:else}
-          <div class="w-1/2 mx-6">
+          <div>
             <label class="label">
               <span>Current participant list</span>
               <textarea readonly class="textarea" rows="4" placeholder="No file specified yet.">{$studyProps.participantList}</textarea>
@@ -273,14 +275,14 @@
     {/if}
 
     {#if !$studyProps.readParticipantsFromFile}
-    <div class="flex">
-      <div class="w-1/2">  
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div>  
         <label class="label">
           <span>Number of participants</span>
           <input class="input" id="num_participants" disabled={$studyProps.readParticipantsFromFile} type="number" min="1" max="999" step="1" bind:value={$studyProps.numParticipants} required={!$studyProps.readParticipantsFromFile}>
         </label>
       </div>
-      <div class="w-1/2 mx-6">  
+      <div>  
         <label class="label">
           <span>Participant ID prefix (displayed on labels)</span>
           <input class="input" id="pref_participant" disabled={$studyProps.readParticipantsFromFile} type="text" maxlength="5" bind:value={$studyProps.participantPrefix}>
