@@ -155,6 +155,20 @@
         toastStore.trigger(t);
       }
     }
+
+    function setParticipantMode(mode: string) {
+      studyProps.update((props) => {
+        return {
+          ...props,
+          readParticipantsFromFile: mode === 'file',
+        };
+      });
+    }
+
+    function handleParticipantModeChange(e: Event) {
+      const target = e.currentTarget as HTMLSelectElement;
+      setParticipantMode(target.value);
+    }
 </script>
 <Toast />
 <Step locked={!$studyPropsValid}>
@@ -182,13 +196,13 @@
       </div>
       <div class="w-1/2 mx-6">  
         <label class="label">
-          <span>Number of biomarker samples per day</span>
+          <span>Number of samples per day (excluding a potential evening sample)</span>
           <input class="input" id="num_samples" type="number" bind:value={$studyProps.numSamples} min="1" max ="99" step="1" required>
         </label>
       </div>
       <div class="w-1/2 mx-6">  
         <label class="label">
-          <span>Prefix for biomarker IDs (e.g. 'S' for saliva)</span>
+          <span>ID Prefix (e.g. 'S' for saliva sample IDs)</span>
           <input class="input" id="prefix_bio" type="text" maxlength="1" bind:value={$studyProps.samplePrefix} required>
         </label>
       </div>
@@ -198,12 +212,18 @@
 
     <div class="flex">
       <div class="w-1/2">  
-        <div class="my-2">
-          <label class="flex items-center space-x-2">
-            <input class="checkbox" id="participants_from_file" type="checkbox" bind:checked={$studyProps.readParticipantsFromFile}>
-            <p>Read participant IDs from file</p>
-          </label>
-        </div> 
+        <label class="label">
+          <span>Participant ID source</span>
+          <select
+            class="select"
+            id="participants_from_file"
+            value={$studyProps.readParticipantsFromFile ? 'file' : 'manual'}
+            on:change={handleParticipantModeChange}
+          >
+            <option value="manual">Configure manually</option>
+            <option value="file">Read participant IDs from file</option>
+          </select>
+        </label>
       </div>
     </div>
   
