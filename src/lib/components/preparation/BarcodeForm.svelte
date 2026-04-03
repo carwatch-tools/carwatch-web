@@ -8,12 +8,6 @@
 	const customPresetId = "custom";
 
 	onMount(() => {
-		// to prevent continuing with invalid settings
-		barcodeProps.update((props) => {
-				return {
-					...props,
-					generateBarcodes: false
-			}});
 		barcodePropsValid.set(isValid());
 		layoutPresetId = getCurrentPresetIdFromValues();
 	});

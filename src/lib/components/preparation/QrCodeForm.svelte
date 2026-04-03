@@ -1,6 +1,6 @@
 <script lang="ts">
 	import {
-		CAR_STUDY,
+		FIELD_STUDY,
 		DEFAULT_SALIVA_DISTANCE,
 		DEFAULT_SALIVA_TIME,
 		DEFAULT_NUM_SAMPLE_ALARM_TIMES,
@@ -126,7 +126,7 @@
 
 </script>
 
-{#if $studyProps.studyType === CAR_STUDY || $studyProps.studyType === OTHER_STUDY}
+{#if $studyProps.studyType === FIELD_STUDY || $studyProps.studyType === OTHER_STUDY}
 	<Step locked={!$qrCodePropsValid}>
 		<svelte:fragment slot="header">Qr Code Details</svelte:fragment>
 		<form id="qr_code_form">

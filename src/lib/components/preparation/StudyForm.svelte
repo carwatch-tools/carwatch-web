@@ -1,6 +1,6 @@
 <script lang="ts">
     import { studyProps, studyPropsValid } from '$lib/stores/configStore';
-    import { CAR_STUDY, LAB_STUDY, OTHER_STUDY } from '$lib/constants';
+    import { FIELD_STUDY, LAB_STUDY, OTHER_STUDY } from '$lib/constants';
 	  import { FileDropzone, Step, Toast, type ToastSettings } from '@skeletonlabs/skeleton';
 	  import { onMount } from 'svelte';
     import Papa from 'papaparse';
@@ -210,12 +210,30 @@
       </div>
     </div>
 
+        
     <hr class="my-4">
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="space-y-2">
+      <label class="flex items-center space-x-2">
+        <input class="checkbox" id="has_evening" type="checkbox" bind:checked={$studyProps.hasEveningSample}>
+        <p>Add additional evening sample (SE)</p>
+        <p class="px-1 pt-1 text-sm opacity-70">This sample does not count towards the number of regular samples per day.</p>
+        
+      </label>
+    
+      <label class="flex items-center space-x-2">
+        <input class="checkbox" id="from_zero" type="checkbox" bind:checked={$studyProps.startSampleFromZero}>
+        <p>Start sample counter from zero</p>
+        <p class="px-1 pt-1 text-sm opacity-70">e.g., S0 instead of S1</p>
+      </label>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-2">
       <div>  
         <label class="label">
-          <span>Participant ID source</span>
+          <span>How would you like to define participant IDs?</span>
           <select
             class="select"
             id="participants_from_file"
@@ -230,7 +248,7 @@
     </div>
   
     {#if $studyProps.readParticipantsFromFile}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
       <div>
         <label class="label">
           <span>Name of column with participant IDs</span>
@@ -241,7 +259,7 @@
       </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
       <div>
         <div class="my-6">
           <FileDropzone name="file" id="file" on:change={handleFileUpload} accept=".csv">
@@ -275,7 +293,7 @@
     {/if}
 
     {#if !$studyProps.readParticipantsFromFile}
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 pt-2">
       <div>  
         <label class="label">
           <span>Number of participants</span>
@@ -290,20 +308,6 @@
       </div>
     </div>
     {/if}    
-    
-    <hr class="my-4">
-
-    <div class="space-y-2">
-      <label class="flex items-center space-x-2">
-        <input class="checkbox" id="has_evening" type="checkbox" bind:checked={$studyProps.hasEveningSample}>
-        <p>Add additional evening sample (SE)</p>
-      </label>
-    
-      <label class="flex items-center space-x-2">
-        <input class="checkbox" id="from_zero" type="checkbox" bind:checked={$studyProps.startSampleFromZero}>
-        <p>Start sample counter from zero (S0 instead of S1)</p>
-      </label>
-    </div>
 
     <hr class="my-4">
 
@@ -311,13 +315,22 @@
       <div class="row">
         <label class="label">
           <span>Study Type</span>
-          <br>
           <select class="select" name="studyType" bind:value={$studyProps.studyType}>
-              <option value={CAR_STUDY}>CAR Study</option>
-              <option value={LAB_STUDY}>Lab-based study</option>
+              <option value={FIELD_STUDY}>Field study</option>
+              <option value={LAB_STUDY}>Lab study</option>
               <option value={OTHER_STUDY}>Other</option>
           </select>
         </label>
+        <div class="pt-3 max-w-xl space-y-2">
+          <p class="text-sm opacity-70"><b>Field study:</b> Supports the full CARWatch workflow, including study scheduling, QR-code setup for the app, and printable barcode labels for saliva tubes.</p>
+          <p class="text-sm opacity-70"><b>Lab study:</b> Generates printable barcode labels for saliva tubes only. No alarms, QR-code setup, or app configuration are included. This is a convenient way to prepare clearly labeled tubes instead of writing participant and sample IDs by hand.</p>
+          <!-- {#if $studyProps.studyType === LAB_STUDY}
+            <p class="text-sm opacity-70"><b>Selected:</b> Lab study mode is best if you only need printable labels for tube preparation.</p>
+          {:else if $studyProps.studyType === FIELD_STUDY}
+          {:else}
+            <p class="text-sm opacity-70"><b>Other:</b> use this when your workflow does not fit the predefined field or lab modes.</p>
+          {/if} -->
+        </div>
       </div>
     </div>
   </form>

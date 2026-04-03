@@ -64,7 +64,12 @@ const defaultQrCodeProps: QrCodeProperties = { generateQrCodes: true, numSampleA
 
 // Create the stores
 export const studyProps = storedStudyProps ? writable<StudyProperties>(addMissingProperties(JSON.parse(storedStudyProps), defaultStudyProps)) : writable<StudyProperties>(defaultStudyProps);
-export const barcodeProps = storedBarcodeProps ? writable<BarcodeProperties>(addMissingProperties(JSON.parse(storedBarcodeProps), defaultBarcodeProps)) : writable<BarcodeProperties>(defaultBarcodeProps);
+export const barcodeProps = storedBarcodeProps
+  ? writable<BarcodeProperties>({
+      ...addMissingProperties(JSON.parse(storedBarcodeProps), defaultBarcodeProps),
+      generateBarcodes: true
+    })
+  : writable<BarcodeProperties>(defaultBarcodeProps);
 export const qrCodeProps = storedQrCodeProps ? writable<QrCodeProperties>(addMissingProperties(JSON.parse(storedQrCodeProps), defaultQrCodeProps)) : writable<QrCodeProperties>(defaultQrCodeProps);
 
 export const studyPropsValid = writable(Boolean(storedStudyProps));

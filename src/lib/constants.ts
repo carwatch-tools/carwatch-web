@@ -1,10 +1,10 @@
 /* constants for study configuration */
 
-export const CAR_STUDY = 1;
+export const FIELD_STUDY = 1;
 export const LAB_STUDY = 2;
 export const OTHER_STUDY = 3;
-export const STUDY_TYPES = [CAR_STUDY, LAB_STUDY, OTHER_STUDY];
-export const APP_OPTION = {CAR_STUDY: true, LAB_STUDY: false, OTHER_STUDY: true};
+export const STUDY_TYPES = [FIELD_STUDY, LAB_STUDY, OTHER_STUDY];
+export const APP_OPTION = {FIELD_STUDY: true, LAB_STUDY: false, OTHER_STUDY: true};
 export const DEFAULT_SALIVA_DISTANCE = 15; 
 export const DEFAULT_NUM_SAMPLE_ALARM_TIMES = 0;
 export const DEFAULT_SALIVA_TIME = "12:00"
