@@ -22,7 +22,7 @@
 			</AppRailAnchor>
 			<AppRailAnchor href="{base}/preparation" selected={$page.route.id === '/preparation'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">groups</span></svelte:fragment>
-				<span>Study Configurator</span>
+				<span>Study Manager</span>
 			</AppRailAnchor>
 			<AppRailAnchor href="{base}/postprocessing" selected={$page.route.id === '/postprocessing'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">insert_chart</span></svelte:fragment>

@@ -41,7 +41,7 @@
 
 <div class="grid grid-cols-3 gap-4 md:gap-10 items-center justify-items-center h-screen">
 	<div class="flex flex-col col-span-2 row-span-3 items-center xl:items-start text-center xl:text-left space-y-4">
-		<h1 class="!text-5xl md:!text-6xl max-w-[800px]">Welcome to <br> CARWatch!</h1>
+		<h1 class="!text-5xl md:!text-6xl max-w-[800px]">Welcome to <br> CARWatch Study Manager</h1>
 		<p class="!text-xl max-w-[675px]">
 			<b>CARWatch is a free open-source framework to support the objective and low-cost assessment of biomarker samples in real-world environments.</b>
 		</p>
@@ -55,15 +55,15 @@
 			<span class="mr-6">&#129404;</span>Suitable for lab-based biomarker collection
 		</p>
 		<p class="!text-xl max-w-[675px]">
-			<span class="mr-6">&#9989;</span>Supports study preparation, data collection & postprocessing
+			<span class="mr-6">&#9989;</span>Supports study preparation, data collection, and post-study log processing
 		</p>
 		<div class="flex gap-8">
 			<a href="{base}/preparation" class="btn variant-filled-primary">
-				<span class="text-xl">Configure Your Study</span>
+				<span class="text-xl">Open Study Manager</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>
 			<a href="{base}/postprocessing" class="btn variant-filled-primary">
-				<span class="text-xl">Analyze your Data</span>
+				<span class="text-xl">Process Study Logs</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>
 		</div>
@@ -91,13 +91,13 @@
 						</span>
 					</svelte:fragment>
 					<svelte:fragment slot="summary">
-						<h3 class="h3">Straightforward study setup</h3>
+						<h3 class="h3">Study preparation</h3>
 					</svelte:fragment>
 					<svelte:fragment slot="content">
 						<div>
 							<ul class="list">
 								<li><span>&#8226;</span>
-									<span class="flex-auto">Straightforward study setup</span>
+									<span class="flex-auto">Study preparation in the browser</span>
 								</li>
 								<li><span>&#8226;</span>
 									<span class="flex-auto">Customize study properties to your needs</span>
@@ -171,7 +171,7 @@
 						</span>
 					</svelte:fragment>
 					<svelte:fragment slot="summary">
-						<h3 class="h3">Analyze CARWatch log data</h3>
+						<h3 class="h3">Process CARWatch log data</h3>
 					</svelte:fragment>
 					<svelte:fragment slot="content">
 						<ul class="list">
