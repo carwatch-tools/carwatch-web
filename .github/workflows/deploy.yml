@@ -36,7 +36,7 @@ jobs:
 
       - name: Build
         env:
-          BASE_PATH: '/carwatch-web'
+          BASE_PATH: '/study-generator'
         run: npm run build
 
       - name: Upload Artifacts
