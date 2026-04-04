@@ -4,7 +4,7 @@
   import { barcodeProps } from "$lib/stores/configStore";
 	import { PAPER_FORMATS, PAPER_FORMAT_A4, PAPER_FORMAT_LETTER } from "$lib/constants";
   import { barcodeDataArray, captionArray} from "$lib/stores/dataStore";
-  import JsBarcode from 'jsbarcode';
+	import JsBarcode from 'jsbarcode';
 	import { onMount } from "svelte";
 	import { tick } from "svelte";
 	import BackButton from "$lib/components/general/BackButton.svelte";
@@ -16,12 +16,11 @@
             $barcodeDataArray.forEach((data, i) => {
                 JsBarcode("#barcode" + i, data, {
                     format: "EAN8",
-                    displayValue: true,
+                    displayValue: false,
                     width: 3, 
                     height: 80, 
                     flat:true,
                     margin: 10,
-                    textPosition: "top",
                 });  
             }); 
         }
@@ -60,6 +59,24 @@
             e.style.fontSize = fontSize + "px";
         }
     }
+
+	function getTopCaption(caption: string) {
+		if (!$barcodeProps.addName) {
+			return "";
+		}
+
+		const separatorIndex = caption.indexOf("_");
+		return separatorIndex >= 0 ? caption.slice(0, separatorIndex) : caption;
+	}
+
+	function getBottomCaption(caption: string) {
+		if (!$barcodeProps.addName) {
+			return caption;
+		}
+
+		const separatorIndex = caption.indexOf("_");
+		return separatorIndex >= 0 ? caption.slice(separatorIndex + 1) : caption;
+	}
 </script>
 
 
@@ -72,9 +89,16 @@
             {#each Array(cellsPerPage) as _, i}
                 {#if !(page*cellsPerPage + i >= numBarcodes)}
                     {#if $barcodeProps.hasBarcode}
-                        <div class="label p-2 overflow-hidden" style="--label-width: {labelWidth}; --label-height: {labelHeight}">
-                            <svg class="barcode" id="barcode{page*cellsPerPage + i}"></svg>
-                            <p class="adjust-text-size text-black px-2" style:bottom=0>{$captionArray[page*cellsPerPage + i]}</p>
+                        <div class="label label-barcode p-2 overflow-hidden" class:label-barcode-no-name={!$barcodeProps.addName} style="--label-width: {labelWidth}; --label-height: {labelHeight}">
+							{#if $barcodeProps.addName}
+								<p class="adjust-text-size top-caption text-black px-2">{getTopCaption($captionArray[page*cellsPerPage + i])}</p>
+							{:else}
+								<div class="top-caption-spacer" aria-hidden="true"></div>
+							{/if}
+							<div class="barcode-shell">
+                            	<svg class="barcode" id="barcode{page*cellsPerPage + i}"></svg>
+							</div>
+                            <p class="adjust-text-size bottom-caption text-black px-2">{getBottomCaption($captionArray[page*cellsPerPage + i])}</p>
                         </div>
                     {:else}
                         <div class="label p-2 overflow-hidden items-center" style="--label-width: {labelWidth}; --label-height: {labelHeight}">
@@ -107,8 +131,24 @@
             overflow: hidden;
             display: flex;
             justify-content: center;
+			align-items: center;
             outline: 2px #000000 dotted;
         }
+
+		.label-barcode {
+			display: grid;
+			grid-template-rows: auto 1fr auto;
+			align-items: center;
+			justify-items: center;
+			padding-top: 2mm;
+			padding-bottom: 2mm;
+			row-gap: 0;
+		}
+
+		.label-barcode-no-name {
+			grid-template-rows: 1fr auto;
+			padding-top: 1mm;
+		}
 
         .adjust-text-size {
             white-space: nowrap;
@@ -116,19 +156,53 @@
             max-width: none !important;
         }
 
+		.barcode-shell {
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			width: 100%;
+			height: 100%;
+			min-height: 0;
+		}
+
         .label svg {
             max-width: 100%;
-            max-height: 80%;
+            max-height: 96%;
         }
         .label p {
             max-width: 100%;
             max-height: 100%;
-            position: absolute;
             font-family: monospace, monospace;
-            font-size: small;
+            font-size: 0.72rem;
             overflow-wrap: break-word; 
             word-wrap: break-word;
         }
+
+		.top-caption {
+			text-align: center;
+			line-height: 0.9;
+		}
+
+		.top-caption-spacer {
+			height: calc(0.72rem * 0.9);
+		}
+
+		.label-barcode-no-name .top-caption-spacer {
+			display: none;
+		}
+
+		.label-barcode-no-name .barcode-shell {
+			grid-row: 1;
+		}
+
+		.label-barcode-no-name .bottom-caption {
+			grid-row: 2;
+		}
+
+		.bottom-caption {
+			text-align: center;
+			line-height: 0.9;
+		}
      
         .page {
             /*A4 format*/
