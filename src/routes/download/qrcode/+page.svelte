@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { PAPER_FORMATS, PAPER_FORMAT_A4, PAPER_FORMAT_LETTER } from "$lib/constants";
   import { qrCodeProps, studyProps } from "$lib/stores/configStore";
   import { qrDataArray } from "$lib/stores/dataStore";
 	import { onMount } from "svelte";
@@ -16,23 +17,33 @@
         });
       });
 
-    let width = $qrCodeProps.useLetterFormat ? "8.5in" : "210mm";
-    let height = $qrCodeProps.useLetterFormat ? "11in" : "297mm";
+    const paperFormat = $qrCodeProps.useLetterFormat ? PAPER_FORMATS[PAPER_FORMAT_LETTER] : PAPER_FORMATS[PAPER_FORMAT_A4];
+    let width = `${paperFormat.widthMm}mm`;
+    let height = `${paperFormat.heightMm}mm`;
     let qrPerPage: number = $qrCodeProps.numColumns * $qrCodeProps.numRows;
     let numPages: number = Math.ceil($studyProps.numParticipants/qrPerPage);
 </script>
 
 <div class="h-full">
     <BackButton parentRoute="download" />
-    <PrintInstruction fileType={"QR codes"}/>
+    <PrintInstruction fileType={"QR codes"} widthMm={paperFormat.widthMm}/>
 
     {#each Array(numPages) as _, page}
-        <div class="page grid grid-cols-{$qrCodeProps.numColumns} bg-white px" style="--width: {width}; --height: {height}" style:padding="20mm">
+        <div
+            class="page grid grid-cols-{$qrCodeProps.numColumns} bg-white px"
+            style="--width: {width}; --height: {height}; --page-padding: 20mm; --row-gap: 8mm; --column-gap: 4mm; --qr-size: 38mm; --label-offset: 1mm; --label-inline-padding: 2mm;"
+            style:padding="var(--page-padding)"
+            style:row-gap="var(--row-gap)"
+            style:column-gap="var(--column-gap)"
+        >
             {#each Array(qrPerPage) as _, i}
-                <div class="label p-4 overflow-hidden" >
-                    <canvas class="qr-code object-contain justify-center" style="max-height:  145px; max-width: 145px"/>
+                <div class="label overflow-hidden" >
+                    {#if $qrCodeProps.includeStudyName && page * qrPerPage + i < $studyProps.numParticipants}
+                        <p class="absolute top-label text-black">{$studyProps.studyName}</p>
+                    {/if}
+                    <canvas class="qr-code object-contain justify-center" />
                     {#if $qrCodeProps.includeParticipantId && page * qrPerPage + i < $studyProps.numParticipants}
-                        <p class="absolute text-black px-2 pt-135">{$studyProps.participantList[page * qrPerPage + i]}</p>
+                        <p class="absolute bottom-label text-black">{$studyProps.participantList[page * qrPerPage + i]}</p>
                     {/if}
                 </div>
             {/each}
@@ -52,6 +63,35 @@
         overflow: hidden;
         display: flex;
         justify-content: center;
+        align-items: center;
+        min-height: calc(var(--qr-size) + 2 * var(--label-offset) + 10mm);
+        padding-top: 6mm;
+        padding-bottom: 6mm;
+    }
+
+    .qr-code {
+        width: var(--qr-size);
+        height: var(--qr-size);
+        max-width: var(--qr-size);
+        max-height: var(--qr-size);
+    }
+
+    .top-label,
+    .bottom-label {
+        left: 50%;
+        transform: translateX(-50%);
+        text-align: center;
+        width: calc(100% - 2 * var(--label-inline-padding));
+        line-height: 1.1;
+        font-size: 4.5mm;
+    }
+
+    .top-label {
+        top: var(--label-offset);
+    }
+
+    .bottom-label {
+        bottom: var(--label-offset);
     }
 
     .page {

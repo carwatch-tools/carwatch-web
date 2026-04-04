@@ -1,22 +1,44 @@
 <script lang="ts">
 	import { type BarcodeLayoutPreset, PRESETS } from "$lib/barcodeLayoutPresets";
-	import { barcodeProps, barcodePropsValid} from "$lib/stores/configStore";
+	import { barcodeProps, barcodePropsValid, studyProps } from "$lib/stores/configStore";
+	import { FIELD_STUDY, PAPER_FORMAT_OPTIONS, PAPER_FORMAT_A4, PAPER_FORMAT_LETTER } from "$lib/constants";
 	import { Step } from "@skeletonlabs/skeleton";
 	import { onMount, afterUpdate } from "svelte";
 
 	let layoutPresetId: string;
 	const customPresetId = "custom";
+	let previousStudyType: number | null = null;
 
 	onMount(() => {
+		if ($studyProps.studyType === FIELD_STUDY) {
+			barcodeProps.update((props) => {
+				return {
+					...props,
+					hasBarcode: true
+				};
+			});
+		}
 		barcodePropsValid.set(isValid());
 		layoutPresetId = getCurrentPresetIdFromValues();
+		previousStudyType = $studyProps.studyType;
 	});
 	// after hiding/showing conditional form elements
 	afterUpdate(()=> barcodePropsValid.set(isValid()));
 
 	// every time the store value changes, check if input is valid
   $: $barcodeProps, barcodePropsValid.set(isValid());
-	let printFormat = $barcodeProps.useLetterFormat ? "letter" : "A4";
+	$: if ($studyProps.studyType !== previousStudyType) {
+		if ($studyProps.studyType === FIELD_STUDY) {
+			barcodeProps.update((props) => {
+				return {
+					...props,
+					hasBarcode: true
+				};
+			});
+		}
+		previousStudyType = $studyProps.studyType;
+	}
+	let printFormat = $barcodeProps.useLetterFormat ? PAPER_FORMAT_LETTER : PAPER_FORMAT_A4;
 	let presets = PRESETS.filter((preset) => preset.printFormat === printFormat);
 
 	function isValid(){
@@ -35,9 +57,35 @@
     }
 
 	function changePrintFormat() {
-		printFormat = $barcodeProps.useLetterFormat ? "letter" : "A4";
+		printFormat = $barcodeProps.useLetterFormat ? PAPER_FORMAT_LETTER : PAPER_FORMAT_A4;
 		presets = PRESETS.filter((preset) => preset.printFormat === printFormat);
 		layoutPresetId = getCurrentPresetIdFromValues();
+	}
+
+	function getDefaultPresetForFormat(format: string) {
+		return PRESETS.find((preset) => preset.printFormat === format);
+	}
+
+	function handlePaperLayoutChange(e: Event) {
+		const target = e.currentTarget as HTMLSelectElement;
+		const nextFormat = target.value;
+		const defaultPreset = getDefaultPresetForFormat(nextFormat);
+
+		barcodeProps.update((props) => {
+			return {
+				...props,
+				useLetterFormat: nextFormat === PAPER_FORMAT_LETTER,
+				numCols: defaultPreset ? defaultPreset.numCols : props.numCols,
+				numRows: defaultPreset ? defaultPreset.numRows : props.numRows,
+				colDist: defaultPreset ? defaultPreset.distanceBetweenCols : props.colDist,
+				rowDist: defaultPreset ? defaultPreset.distanceBetweenRows : props.rowDist,
+				leftMargin: defaultPreset ? defaultPreset.leftMargin : props.leftMargin,
+				rightMargin: defaultPreset ? defaultPreset.rightMargin : props.rightMargin,
+				topMargin: defaultPreset ? defaultPreset.topMargin : props.topMargin,
+				bottomMargin: defaultPreset ? defaultPreset.bottomMargin : props.bottomMargin
+			};
+		});
+		changePrintFormat();
 	}
 
 	function insertPresetValues() {
@@ -84,6 +132,12 @@
 	<svelte:fragment slot="header">Barcode Details</svelte:fragment>
 
 	<form id="barcode_form">
+		<p class="mb-4 text-sm opacity-70">
+			Barcode labels are generated so that each sampling tube can (1) be clearly identified (instead of relying on handwritten IDs), and (2) have a unique ID that can be easily scanned by the CARWatch app during data collection. 
+		</p>
+		<p class="mb-4 text-sm opacity-70">
+			You can choose to generate labels for each study, and customize the label layout to fit your printer and label paper.
+		</p>
 		<label class="flex items-center space-x-2">
 			<input class="checkbox" id="generate_labels" type="checkbox" bind:checked={$barcodeProps.generateBarcodes}>
 			<p>Generate labels for study</p>
@@ -93,25 +147,36 @@
 		<hr class="my-4">
 		<label class="flex items-center space-x-2">
 			<input class="checkbox" id="add_details" type="checkbox" bind:checked={$barcodeProps.addName}>
-			<p>Add study name to labels<p>
+			<p>Add study name to labels</p>
+			<p class="text-sm opacity-70">Puts the study name at the top of each label</p>
 		</label>
 		<label class="flex items-center space-x-2">
 			<input class="checkbox" id="addr_barcodes" type="checkbox" bind:checked={$barcodeProps.hasBarcode}>
-			<p>Add barcodes to labels<p>
+			<p>Add barcodes to labels</p>
+			<p class="text-sm opacity-70">Adds a barcode to each label. This is required for the CARWatch app to function properly.</p>
 		</label>
 		<hr class="my-4">
 		<h4>Print label layout:</h4>
-		<label class="flex items-center space-x-2 my-3">
-			<input class="checkbox" id="use_letter_format" type="checkbox" bind:checked={$barcodeProps.useLetterFormat} on:change={changePrintFormat}>
-			<p>Use ANSI letter format (11 in &times; 8.5 in) instead of A4 (297 mm &times; 210 mm)</p>
+		<label class="label md:w-1/3 my-4">
+			<span>Paper layout</span>
+			<select
+				class="select"
+				id="use_letter_format"
+				value={$barcodeProps.useLetterFormat ? PAPER_FORMAT_LETTER : PAPER_FORMAT_A4}
+				on:change={handlePaperLayoutChange}
+			>
+				{#each PAPER_FORMAT_OPTIONS as format}
+					<option value={format.id}>{format.label}</option>
+				{/each}
+			</select>
 		</label>
 		<label class="label md:w-1/3 my-4">
 			<span>Layout preset</span>
 			<select class="select" name="studyType" bind:value={layoutPresetId} on:change={insertPresetValues}>
-				<option value="{customPresetId}">Custom</option>
 				{#each presets as preset}
 					<option value={preset.id}>{preset.name} ({preset.labelsPerPage} labels per page)</option>
 				{/each}
+				<option value="{customPresetId}">Custom</option>
 			</select>
 		</label>
 		<div class="flex">

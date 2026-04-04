@@ -28,7 +28,32 @@ export const QR_PARSER_PROPERTY_WEB_APP_VERSION = "V";
 
 export const FORBIDDEN_CHARACTERS = [QR_PARSER_LIST_SEPARATOR, QR_PARSER_SEPARATOR, QR_PARSER_SPECIFIER];
 
-export const A4_WIDTH = 210;
-export const A4_HEIGHT = 297;
-export const LETTER_WIDTH = 215.9;
-export const LETTER_HEIGHT = 279.4;
+export const PAPER_FORMAT_A4 = "A4";
+export const PAPER_FORMAT_LETTER = "letter";
+
+export interface PaperFormatConfig {
+  id: string;
+  label: string;
+  widthMm: number;
+  heightMm: number;
+}
+
+export const PAPER_FORMATS: Record<string, PaperFormatConfig> = {
+  [PAPER_FORMAT_A4]: {
+    id: PAPER_FORMAT_A4,
+    label: "DIN A4 (297 mm × 210 mm)",
+    widthMm: 210,
+    heightMm: 297
+  },
+  [PAPER_FORMAT_LETTER]: {
+    id: PAPER_FORMAT_LETTER,
+    label: "ANSI Letter (11 in × 8.5 in)",
+    widthMm: 215.9,
+    heightMm: 279.4
+  }
+};
+
+export const PAPER_FORMAT_OPTIONS = [
+  PAPER_FORMATS[PAPER_FORMAT_A4],
+  PAPER_FORMATS[PAPER_FORMAT_LETTER]
+];

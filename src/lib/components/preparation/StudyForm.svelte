@@ -313,7 +313,7 @@
 
     <div class="w-fit">  
       <div class="row">
-        <label class="label">
+        <label class="label md:w-1/3">
           <span>Study Type</span>
           <select class="select" name="studyType" bind:value={$studyProps.studyType}>
               <option value={FIELD_STUDY}>Field study</option>
@@ -321,16 +321,10 @@
               <option value={OTHER_STUDY}>Other</option>
           </select>
         </label>
-        <div class="pt-3 max-w-xl space-y-2">
-          <p class="text-sm opacity-70"><b>Field study:</b> Supports the full CARWatch workflow, including study scheduling, QR-code setup for the app, and printable barcode labels for saliva tubes.</p>
-          <p class="text-sm opacity-70"><b>Lab study:</b> Generates printable barcode labels for saliva tubes only. No alarms, QR-code setup, or app configuration are included. This is a convenient way to prepare clearly labeled tubes instead of writing participant and sample IDs by hand.</p>
-          <!-- {#if $studyProps.studyType === LAB_STUDY}
-            <p class="text-sm opacity-70"><b>Selected:</b> Lab study mode is best if you only need printable labels for tube preparation.</p>
-          {:else if $studyProps.studyType === FIELD_STUDY}
-          {:else}
-            <p class="text-sm opacity-70"><b>Other:</b> use this when your workflow does not fit the predefined field or lab modes.</p>
-          {/if} -->
-        </div>
+
+        <p class="text-sm opacity-70"><b>Field study:</b> Supports the full CARWatch workflow, including study scheduling, QR-code setup for the app, and printable barcode labels for saliva tubes.</p>
+        <p class="text-sm opacity-70"><b>Lab study:</b> Generates printable barcode labels for saliva tubes only. No alarms, QR-code setup, or app configuration are included. This is a convenient way to prepare clearly labeled tubes instead of writing participant and sample IDs by hand.</p>
+          
       </div>
     </div>
   </form>

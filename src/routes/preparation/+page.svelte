@@ -4,6 +4,8 @@
 	import { Stepper } from "@skeletonlabs/skeleton";
 	import { goto } from "$app/navigation";
 	import { onMount } from "svelte";
+	import { get } from "svelte/store";
+	import { qrCodePropsValid, qrCodeSubmitAttempted } from "$lib/stores/configStore";
 
 	let StudyForm;
 	let BarcodeForm;
@@ -17,15 +19,20 @@
 
 
 	function onCompleteHandler(e: CustomEvent<any>): void {
+		if (!get(qrCodePropsValid)) {
+			qrCodeSubmitAttempted.set(true);
+			return;
+		}
+		qrCodeSubmitAttempted.set(false);
 		goto("download");
 	}
 
 
 </script>
 
-<div class="p-6 h-full">
-	<div class="flex items-center justify-center h-full">
-		<Stepper on:complete={onCompleteHandler} class="w-5/6">
+<div class="p-6 h-full overflow-y-auto">
+	<div class="flex justify-center items-start min-h-full pt-4">
+		<Stepper on:complete={onCompleteHandler} class="w-11/12 max-w-[95rem]">
 			<svelte:component this={StudyForm}/>
 			<svelte:component this={BarcodeForm}/>
 			<svelte:component this={QrCodeForm}/>
@@ -35,6 +42,3 @@
 
   
   
-
-
-

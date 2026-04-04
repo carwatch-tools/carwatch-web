@@ -2,7 +2,7 @@
 	import { base } from "$app/paths";
 	import PrintInstruction from "$lib/components/download/PrintInstruction.svelte";
   import { barcodeProps } from "$lib/stores/configStore";
-	import { A4_HEIGHT, A4_WIDTH, LETTER_WIDTH, LETTER_HEIGHT } from "$lib/constants";
+	import { PAPER_FORMATS, PAPER_FORMAT_A4, PAPER_FORMAT_LETTER } from "$lib/constants";
   import { barcodeDataArray, captionArray} from "$lib/stores/dataStore";
   import JsBarcode from 'jsbarcode';
 	import { onMount } from "svelte";
@@ -32,8 +32,9 @@
     });
 
     // page properties
-    let width = $barcodeProps.useLetterFormat ? "8.5in" : "210mm";
-    let height = $barcodeProps.useLetterFormat ? "11in" : "297mm";
+    const paperFormat = $barcodeProps.useLetterFormat ? PAPER_FORMATS[PAPER_FORMAT_LETTER] : PAPER_FORMATS[PAPER_FORMAT_A4];
+    let width = `${paperFormat.widthMm}mm`;
+    let height = `${paperFormat.heightMm}mm`;
     let colDist = $barcodeProps.colDist + "mm";
     let rowDist = $barcodeProps.rowDist + "mm";
     let paddingRight= $barcodeProps.rightMargin + "mm"; 
@@ -45,8 +46,8 @@
     let cellsPerPage = $barcodeProps.numRows * $barcodeProps.numCols;
     let numBarcodes = $barcodeDataArray.length 
     let numPages: number = Math.ceil(numBarcodes / cellsPerPage)
-    let pageWidth = $barcodeProps.useLetterFormat ? LETTER_WIDTH : A4_WIDTH;
-    let pageHeight = $barcodeProps.useLetterFormat ? LETTER_HEIGHT : A4_HEIGHT;
+    let pageWidth = paperFormat.widthMm;
+    let pageHeight = paperFormat.heightMm;
     let labelWidth = (pageWidth - $barcodeProps.leftMargin - $barcodeProps.rightMargin - $barcodeProps.colDist * ($barcodeProps.numCols - 1)) / $barcodeProps.numCols + "mm";
     let labelHeight = (pageHeight - $barcodeProps.topMargin - $barcodeProps.bottomMargin - $barcodeProps.rowDist * ($barcodeProps.numRows - 1)) / $barcodeProps.numRows + "mm";
 
@@ -65,7 +66,7 @@
 <div class="h-full">
     <BackButton parentRoute="download" />
 
-    <PrintInstruction fileType={"barcodes"}/>
+    <PrintInstruction fileType={"barcodes"} widthMm={paperFormat.widthMm}/>
     {#each Array(numPages) as _, page}
         <div class="page grid grid-cols-{`${$barcodeProps.numCols}`} bg-white" style="--width: {width}; --height: {height}" style:gap={`${rowDist} ${colDist}`} style:padding-top={paddingTop} style:padding-bottom={paddingBottom} style:padding-left={paddingLeft} style:padding-right={paddingRight}>
             {#each Array(cellsPerPage) as _, i}
