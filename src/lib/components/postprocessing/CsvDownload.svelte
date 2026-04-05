@@ -31,7 +31,7 @@
         <section class="w-full flex justify-center items-center">
             <button on:click={downloadCsv} type="button" class="btn variant-filled-primary p-6 mt-6" disabled={!downloadEnabled}>
                 <span class="material-symbols-outlined">download</span>
-                <span>Download CSV</span>
+                <span class="flex-1 text-center">Download CSV</span>
             </button>
         </section>
     </div>

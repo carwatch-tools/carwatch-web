@@ -1,16 +1,16 @@
 
 :root {
 	/* =~= Theme Properties =~= */
-	--theme-font-family-base: FAUSans-Office;
-	--theme-font-family-heading: FAUSans-Office;
-	--theme-font-color-base: 0 0 0;
-	--theme-font-color-dark: 255 255 255;
+	--theme-font-family-base: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--theme-font-family-heading: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+	--theme-font-color-base: 28 53 66;
+	--theme-font-color-dark: 224 230 233;
 	--theme-rounded-base: 9999px;
 	--theme-rounded-container: 8px;
 	--theme-border-base: 1px;
 	/* =~= Theme On-X Colors =~= */
-	--on-primary: 255 255 255;
-	--on-secondary: 255 255 255;
+	--on-primary: 244 246 248;
+	--on-secondary: 244 246 248;
 	--on-tertiary: 0 0 0;
 	--on-success: 0 0 0;
 	--on-warning: 0 0 0;
@@ -96,14 +96,29 @@
 	--color-surface-900: 57 77 89; /* ⬅ #394d59 */
 }
 
+.dark {
+	/* Dark mode primary aligned with the landing page's lighter accent */
+	--color-primary-50: 244 246 248; /* ⬅ #f4f6f8 */
+	--color-primary-100: 237 239 242; /* ⬅ #edeff2 */
+	--color-primary-200: 230 233 237; /* ⬅ #e6e9ed */
+	--color-primary-300: 209 216 223; /* ⬅ #d1d8df */
+	--color-primary-400: 168 181 193; /* ⬅ #a8b5c1 */
+	--color-primary-500: 140 159 177; /* ⬅ #8C9FB1 */
+	--color-primary-600: 126 143 159; /* ⬅ #7e8f9f */
+	--color-primary-700: 105 119 133; /* ⬅ #697785 */
+	--color-primary-800: 84 95 106; /* ⬅ #545f6a */
+	--color-primary-900: 69 78 87; /* ⬅ #454e57 */
+	--on-primary: 244 246 248; /* ⬅ #f4f6f8 */
+}
+
 
 html, body { @apply h-full; }
 body {
 	background-image:
-		radial-gradient(at 0% 0%, rgba(var(--color-tertiary-500) / 0.33) 0px, transparent 50%),
-		radial-gradient(at 98% 1%, rgba(var(--color-tertiary-500) / 0.33) 0px, transparent 50%),
-        radial-gradient(at 1% 98%, rgba(var(--color-primary-500) / 0.33) 0px, transparent 50%),
-        radial-gradient(at 98% 98%, rgba(var(--color-primary-500) / 0.33) 0px, transparent 50%);
+		radial-gradient(at 0% 0%, rgba(var(--color-tertiary-50) / 0.1) 0px, transparent 70%),
+		radial-gradient(at 98% 1%, rgba(var(--color-tertiary-50) / 0.1) 0px, transparent 70%),
+        radial-gradient(at 1% 98%, rgba(var(--color-primary-50) / 0.1) 0px, transparent 70%),
+        radial-gradient(at 98% 98%, rgba(var(--color-primary-50) / 0.1) 0px, transparent 70%);
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;

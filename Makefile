@@ -1,7 +1,9 @@
 NODE_PATH := /opt/homebrew/bin
-BASE_PATH := /study-manager
+BASE_PATH ?= /study-manager
+PREVIEW_HOST ?= 127.0.0.1
+PREVIEW_PORT ?= 4173
 
-.PHONY: dev build preview
+.PHONY: dev build preview preview-deploy
 
 dev:
 	PATH=$(NODE_PATH):$$PATH npm run dev
@@ -9,5 +11,9 @@ dev:
 build:
 	PATH=$(NODE_PATH):$$PATH BASE_PATH=$(BASE_PATH) npm run build
 
-preview: build
-	PATH=$(NODE_PATH):$$PATH npm run preview
+preview:
+	PATH=$(NODE_PATH):$$PATH BASE_PATH= npm run build
+	PATH=$(NODE_PATH):$$PATH npm run preview -- --host $(PREVIEW_HOST) --port $(PREVIEW_PORT)
+
+preview-deploy: build
+	PATH=$(NODE_PATH):$$PATH npm run preview -- --host $(PREVIEW_HOST) --port $(PREVIEW_PORT)

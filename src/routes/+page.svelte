@@ -41,10 +41,11 @@
 
 <div class="grid grid-cols-3 gap-4 md:gap-10 items-center justify-items-center h-screen">
 	<div class="flex flex-col col-span-2 row-span-3 items-center xl:items-start text-center xl:text-left space-y-4">
-		<h1 class="!text-5xl md:!text-6xl max-w-[800px]">CARWatch Study Manager</h1>
+		<h1 class="md:!text-5xl text-secondary-500 dark:text-secondary-200"><strong>CARWatch</strong> Study Manager</h1>
 		<p class="!text-xl max-w-[675px]">
-			<b>The Study Manager is the CARWatch web interface for study preparation, barcode and QR code generation, and post-study log processing.</b>
+			The Study Manager is the CARWatch web interface for <b>study preparation</b>, <b>barcode and QR code generation</b>, and <b>post-study log processing</b>.
 		</p>
+		<p>	</p>
 		<p class="!text-xl max-w-[675px]">
 			<b>It has the following features:</b>
 		</p>
@@ -63,11 +64,11 @@
 		</p>
 		<div class="flex gap-8">
 			<a href="{base}/study-configuration" class="btn variant-filled-primary">
-				<span class="text-xl">Study Configuration</span>
+				<span class="flex-1 text-center">Study Configuration</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>
 			<a href="{base}/postprocessing" class="btn variant-filled-primary">
-				<span class="text-xl">Log File Processing</span>
+				<span class="flex-1 text-center">Log File Processing</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>
 			<!-- <a href="https://carwatch-tools.github.io/" target="_blank" rel="noreferrer" class="btn variant-soft-primary">

@@ -126,17 +126,19 @@
 	<h1>Study Material</h1>
 	{#if $barcodeProps.generateBarcodes}
 		<div>
-			<button on:click={downloadBarcodes} type="button" class="btn variant-filled-primary p-6 mt-6">
+			<button on:click={downloadBarcodes} type="button" class="btn btn-balanced variant-filled-primary p-6 mt-6">
 				<span class="material-symbols-outlined">barcode_scanner</span>
 				<span>Get Printable Barcodes</span>
+				<span aria-hidden="true"></span>
 			</button>
 		</div>
 	{/if}
 	{#if $qrCodeProps.generateQrCodes}
 		<div>
-			<button on:click={downloadQrCode} type="button" class="btn variant-filled-primary p-6 mt-6">
+			<button on:click={downloadQrCode} type="button" class="btn btn-balanced variant-filled-primary p-6 mt-6">
 				<span class="material-symbols-outlined">qr_code_2</span>
 				<span>Get Printable QR Codes</span>
+				<span aria-hidden="true"></span>
 			</button>
 		</div>
 	{/if}

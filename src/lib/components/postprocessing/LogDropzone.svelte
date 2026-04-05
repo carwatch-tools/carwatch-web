@@ -69,7 +69,7 @@
 
 			<SelectedFileList bind:files={files} />
 			<section class="w-full flex justify-end items-end">
-				<button type="submit" class="btn variant-filled-primary p-2" disabled={!filesUploaded}>
+				<button type="submit" class="btn variant-filled-primary" disabled={!filesUploaded}>
 					<span>Start Processing</span>
 				</button>
 			</section>
