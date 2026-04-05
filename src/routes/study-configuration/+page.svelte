@@ -3,6 +3,7 @@
 
 	import { Stepper } from "@skeletonlabs/skeleton";
 	import { goto } from "$app/navigation";
+	import { base } from "$app/paths";
 	import { onMount } from "svelte";
 	import { get } from "svelte/store";
 	import { preparationCurrentStep, qrCodePropsValid, qrCodeSubmitAttempted } from "$lib/stores/configStore";
@@ -28,7 +29,7 @@
 			return;
 		}
 		qrCodeSubmitAttempted.set(false);
-		goto("download");
+		goto(`${base}/download`);
 	}
 
 
