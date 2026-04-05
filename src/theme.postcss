@@ -115,13 +115,19 @@
 html, body { @apply h-full; }
 body {
 	background-image:
-		radial-gradient(at 0% 0%, rgba(var(--color-tertiary-50) / 0.1) 0px, transparent 70%),
-		radial-gradient(at 98% 1%, rgba(var(--color-tertiary-50) / 0.1) 0px, transparent 70%),
-        radial-gradient(at 1% 98%, rgba(var(--color-primary-50) / 0.1) 0px, transparent 70%),
-        radial-gradient(at 98% 98%, rgba(var(--color-primary-50) / 0.1) 0px, transparent 70%);
+		radial-gradient(circle at top left, rgba(var(--color-primary-500) / 0.08), transparent 34%),
+		linear-gradient(180deg, #f9fbfd 0%, #fafafa 52%, #edf3f7 100%);
+	background-color: #fafafa;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
+}
+
+.dark body {
+	background-image:
+		radial-gradient(circle at top left, rgba(var(--color-primary-500) / 0.14), transparent 34%),
+		linear-gradient(180deg, #172b36 0%, #1c3542 52%, #12171d 100%);
+	background-color: #1a1a1a;
 }
 		
