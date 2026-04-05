@@ -45,7 +45,6 @@
 		<p class="!text-xl max-w-[675px]">
 			The Study Manager is the CARWatch web interface for <b>study preparation</b>, <b>barcode and QR code generation</b>, and <b>post-study log processing</b>.
 		</p>
-		<p>	</p>
 		<p class="!text-xl max-w-[675px]">
 			<b>It has the following features:</b>
 		</p>
@@ -67,7 +66,7 @@
 				<span class="flex-1 text-center">Study Configuration</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>
-			<a href="{base}/postprocessing" class="btn variant-filled-primary">
+			<a href="{base}/log-processing" class="btn variant-filled-primary">
 				<span class="flex-1 text-center">Log File Processing</span>
 				<i class="fa-solid fa-arrow-right-long" />
 			</a>

@@ -24,7 +24,7 @@
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">groups</span></svelte:fragment>
 				<span>Study<br>Configuration</span>
 			</AppRailAnchor>
-			<AppRailAnchor href="{base}/postprocessing" selected={$page.route.id === '/postprocessing'}>
+			<AppRailAnchor href="{base}/log-processing" selected={$page.route.id === '/log-processing'}>
 				<svelte:fragment slot="lead"><span class="material-symbols-outlined">insert_chart</span></svelte:fragment>
 				<span>Log File<br> Processing</span>
 			</AppRailAnchor>
